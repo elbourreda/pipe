@@ -1,0 +1,11 @@
+total 88
+drwxr-xr-x  10 rel-bour  2019    340 May 30 18:04 .
+drwx------  20 rel-bour  2019    680 May 30 12:37 ..
+-rw-r--r--   1 rel-bour  2019     29 May 30 17:04 1
+-rw-r--r--   1 rel-bour  2019    197 May 29 14:53 Makefile
+-rw-r--r--   1 rel-bour  2019    565 May 30 18:04 file1
+-rwxr-xr-x   1 rel-bour  2019      0 May 30 18:03 file2
+-rw-r--r--   1 rel-bour  2019   5119 May 30 18:03 main.c
+-rw-r--r--   1 rel-bour  2019   2210 May 30 16:49 pip2.c
+-rwxr-xr-x   1 rel-bour  2019  13676 May 30 18:04 pipex
+-rw-r--r--   1 rel-bour  2019   1056 May 29 12:04 pipex.h
