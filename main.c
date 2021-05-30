@@ -6,7 +6,7 @@
 /*   By: rel-bour <rel-bour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 11:45:03 by rel-bour          #+#    #+#             */
-/*   Updated: 2021/05/30 18:03:46 by rel-bour         ###   ########.fr       */
+/*   Updated: 2021/05/30 21:26:42 by rel-bour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,38 +241,50 @@ int main(int argc, char **argv, char **envs)
 	pid_t pid;
 	char **cmd;
 	
-	fd[0] = open(argv[1], O_CREAT | O_WRONLY , 0777);
-	if(fd[0] == -1)
-	{
-		perror("error fd[0]");
-	}
-	fd[1] = open(argv[4], O_CREAT | O_WRONLY , 0777);
-	if(fd[1] == -1)
-		return(0);
-	if (pipe(f_p) == -1)
-        return(0);// p[0] ,p[1];
+	// fd[0] = open(argv[1], O_CREAT | O_WRONLY , 0777);
+	// if(fd[0] == -1)
+	// {
+	// 	perror("error fd[0]");
+	// }
+	// fd[1] = open(argv[4], O_CREAT | O_WRONLY , 0777);
+	// if(fd[1] == -1)
+	// 	return(0);
+	// if (pipe(f_p) == -1)
+    //     return(0);// p[0] ,p[1];
+		
+	pipe(fd);
+	
 	pid = fork();
+
+	
 	if (pid == -1)
 		return(0);
 	else if(pid == 0)
 	{
-		dup2(fd[0], 1);
-		dup2(f_p[0], fd[0]);
+		// dup2(fd[0], 1);
+		// dup2(f_p[0], fd[0]);
+		dup2(fd[0], 0);
+		dup2(0, fd[0]);
 		close(fd[0]);
-		//close(fd[1]);
-		cmd = ft_split(argv[2], ' ');
+		close(fd[1]);
+		cmd = ft_split(argv[1], ' ');
 		cmd[0] = ft_path(cmd[0]);
 		exec_cmd(cmd, envs);
 	}
 	else
 	{
-		dup2(fd[1], 1);
-		dup2(f_p[1], f_p[0]);
-		close(fd[1]);
-		// //close(fd[0]);
-		cmd = ft_split(argv[3], ' ');
-		cmd[0] = ft_path(argv[3]);
-		exec_cmd(cmd, envs);
+		// dup2(fd[1], 1);
+		// dup2(f_p[1], f_p[0]);
+		if(fork() == 0)
+		{
+			dup2(fd[1], 1);
+			dup2(1, fd[1]);
+			close(fd[0]);
+			close(fd[1]);
+			cmd = ft_split(argv[2], ' ');
+			cmd[0] = ft_path(cmd[0]);
+			exec_cmd(cmd, envs);
+		}
 	}
     return 0;
 }
